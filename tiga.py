@@ -10,72 +10,185 @@ st.set_page_config(page_title='Verifikasi F3', layout="wide")
 def copyDataframe(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini):
     # Membuat DataFrame untuk periode lalulalu
     juruslalulalu = pd.DataFrame({
+        'BLTH': lalulalu.get('BLTH', pd.Series(dtype='object')),
         'IDPEL': lalulalu.get('IDPEL', pd.Series(dtype='int64')),
-        'PEMKWH': lalulalu.get('PEMKWH', pd.Series(dtype='float64')),
+        'NOPEL': lalulalu.get('NOPEL', pd.Series(dtype='object')),
+        'NAMA': lalulalu.get('NAMA', pd.Series(dtype='object')),
+        'UNITAP': lalulalu.get('UNITAP', pd.Series(dtype='object')),
+        'UNITUP': lalulalu.get('UNITUP', pd.Series(dtype='object')),
+        'KODEPOSTING': lalulalu.get('KODEPOSTING', pd.Series(dtype='int64')),
+        'KDKELOMPOK': lalulalu.get('KDKELOMPOK', pd.Series(dtype='object')),
+        'KDPROSES': lalulalu.get('KDPROSES', pd.Series(dtype='object')),
+        'KDDK': lalulalu.get('KDDK', pd.Series(dtype='object')),
         'TARIF': lalulalu.get('TARIF', pd.Series(dtype='object')),
         'DAYA': lalulalu.get('DAYA', pd.Series(dtype='float64')),
+        'TG': lalulalu.get('TG', pd.Series(dtype='object')),
+        'FKMKWH': lalulalu.get('FKMKWH', pd.Series(dtype='float64')),
+        'FKMKVARH': lalulalu.get('FKMKVARH', pd.Series(dtype='float64')),
+        'SLALWBP': lalulalu.get('SLALWBP', pd.Series(dtype='float64')),
+        'LWBPCABUT': lalulalu.get('LWBPCABUT', pd.Series(dtype='float64')),
+        'LWBPPASANG': lalulalu.get('LWBPPASANG', pd.Series(dtype='float64')),
+        'SAHLWBP': lalulalu.get('SAHLWBP', pd.Series(dtype='float64')),
+        'LWBPPAKAI': lalulalu.get('LWBPPAKAI', pd.Series(dtype='float64')),
+        'SLAWBP': lalulalu.get('SLAWBP', pd.Series(dtype='float64')),
+        'THBLMUT': lalulalu.get('THBLMUT', pd.Series(dtype='object')),
+        'WBPCABUT': lalulalu.get('WBPCABUT', pd.Series(dtype='float64')),
+        'WBPPASANG': lalulalu.get('WBPPASANG', pd.Series(dtype='float64')),
+        'SAHWBP': lalulalu.get('SAHWBP', pd.Series(dtype='float64')),
+        'WBPPAKAI': lalulalu.get('WBPPAKAI', pd.Series(dtype='float64')),
+        'SLAKVARH': lalulalu.get('SLAKVARH', pd.Series(dtype='float64')),
+        'KVARHCABUT': lalulalu.get('KVARHCABUT', pd.Series(dtype='float64')),
+        'KVARHPASANG': lalulalu.get('KVARHPASANG', pd.Series(dtype='float64')),
+        'SAHKVARH': lalulalu.get('SAHKVARH', pd.Series(dtype='float64')),
+        'KVARHPAKAI': lalulalu.get('KVARHPAKAI', pd.Series(dtype='float64')),
+        'KELBKVARH': lalulalu.get('KELBKVARH', pd.Series(dtype='float64')),
+        'KVAMAX_WBP': lalulalu.get('KVAMAX_WBP', pd.Series(dtype='float64')),
+        'DAYAMAX': lalulalu.get('DAYAMAX', pd.Series(dtype='float64')),
+        'DAYAMAX_WBP': lalulalu.get('DAYAMAX_WBP', pd.Series(dtype='float64')),
+        'TGLBACA': lalulalu.get('TGLBACA', pd.Series(dtype='object')),
+        'TGLUPLOAD': lalulalu.get('TGLUPLOAD', pd.Series(dtype='object')),
+        'TGLINISIALISASI': lalulalu.get('TGLINISIALISASI', pd.Series(dtype='object')),
+        'NAMAPNJ': lalulalu.get('NAMAPNJ', pd.Series(dtype='object')),
+        'KODERBM': lalulalu.get('KODERBM', pd.Series(dtype='object')),
         'DLPD': lalulalu.get('DLPD', pd.Series(dtype='float64')),
-        'LWBP_LALULALU': lalulalu.get('SLALWBP', pd.Series(dtype='float64')),
-        'LWBP_CABUT': lalulalu.get('SAHLWBP_CABUT', pd.Series(dtype='float64')),
-        'LWBP_PASANG': lalulalu.get('SLALWBP_PASANG', pd.Series(dtype='float64')),
-        'LWBP_AKHIR': lalulalu.get('SAHLWBP', pd.Series(dtype='float64')),
-        'WBP_LALULALU': lalulalu.get('SLAWBP', pd.Series(dtype='float64')),
-        'WBP_CABUT': lalulalu.get('SAHWBP_CABUT', pd.Series(dtype='float64')),
-        'WBP_PASANG': lalulalu.get('SLAWBP_PASANG', pd.Series(dtype='float64')),
-        'WBP_AKHIR': lalulalu.get('SAHWBP', pd.Series(dtype='float64')),
-        'JAM_NYALA': lalulalu.get('JAMNYALA', pd.Series(dtype='float64')),
-        'FAKM': lalulalu.get('FAKM', pd.Series(dtype='float64')),
-        'PEMKWH_REAL': (((lalulalu.get('SAHLWBP', 0) - lalulalu.get('SLALWBP_PASANG', 0))
-                        + (lalulalu.get('SAHLWBP_CABUT', 0) - lalulalu.get('SLALWBP', 0)))
-                        + ((lalulalu.get('SAHWBP', 0) - lalulalu.get('SLAWBP_PASANG', 0))
-                        + (lalulalu.get('SAHWBP_CABUT', 0) - lalulalu.get('SLAWBP', 0))))
+        'DLPD_LM': lalulalu.get('DLPD_LM', pd.Series(dtype='float64')),
+        'KDPEMBMETER': lalulalu.get('KDPEMBMETER', pd.Series(dtype='object')),
+        'PTGENTRIMETER': lalulalu.get('PTGENTRIMETER', pd.Series(dtype='object')),
+        'KODE_BACA': lalulalu.get('KODE_BACA', pd.Series(dtype='object')),
+        'KELAINAN_BC_METER': lalulalu.get('KELAINAN_BC_METER', pd.Series(dtype='object')),
+        'MSG': lalulalu.get('MSG', pd.Series(dtype='object')),
+        'DLPD_FKM': lalulalu.get('DLPD_FKM', pd.Series(dtype='float64')),
+        'DLPD_KVARH': lalulalu.get('DLPD_KVARH', pd.Series(dtype='float64')),
+        'DLPD_3BLN': lalulalu.get('DLPD_3BLN', pd.Series(dtype='float64')),
+        'DLPD_JNSMUTASI': lalulalu.get('DLPD_JNSMUTASI', pd.Series(dtype='object')),
+        'DLPD_TGLBACA': lalulalu.get('DLPD_TGLBACA', pd.Series(dtype='object')),
+        'ALASAN_ENTRI': lalulalu.get('ALASAN_ENTRI', pd.Series(dtype='object')),
+        'ALASAN_KOREKSI': lalulalu.get('ALASAN_KOREKSI', pd.Series(dtype='object')),
+        'SAHLWBP_IMPORT': lalulalu.get('SAHLWBP_IMPORT', pd.Series(dtype='float64')),
+        'SAHWBP_IMPORT': lalulalu.get('SAHWBP_IMPORT', pd.Series(dtype='float64')),
+        'SAHKVARH_IMPORT': lalulalu.get('SAHKVARH_IMPORT', pd.Series(dtype='float64'))
     })
 
     # Membuat DataFrame untuk periode lalu
     juruslalu = pd.DataFrame({
+        'BLTH': lalu.get('BLTH', pd.Series(dtype='object')),
         'IDPEL': lalu.get('IDPEL', pd.Series(dtype='int64')),
-        'PEMKWH': lalu.get('PEMKWH', pd.Series(dtype='float64')),
+        'NOPEL': lalu.get('NOPEL', pd.Series(dtype='object')),
+        'NAMA': lalu.get('NAMA', pd.Series(dtype='object')),
+        'UNITAP': lalu.get('UNITAP', pd.Series(dtype='object')),
+        'UNITUP': lalu.get('UNITUP', pd.Series(dtype='object')),
+        'KODEPOSTING': lalu.get('KODEPOSTING', pd.Series(dtype='int64')),
+        'KDKELOMPOK': lalu.get('KDKELOMPOK', pd.Series(dtype='object')),
+        'KDPROSES': lalu.get('KDPROSES', pd.Series(dtype='object')),
+        'KDDK': lalu.get('KDDK', pd.Series(dtype='object')),
         'TARIF': lalu.get('TARIF', pd.Series(dtype='object')),
         'DAYA': lalu.get('DAYA', pd.Series(dtype='float64')),
+        'TG': lalu.get('TG', pd.Series(dtype='object')),
+        'FKMKWH': lalu.get('FKMKWH', pd.Series(dtype='float64')),
+        'FKMKVARH': lalu.get('FKMKVARH', pd.Series(dtype='float64')),
+        'SLALWBP': lalu.get('SLALWBP', pd.Series(dtype='float64')),
+        'LWBPCABUT': lalu.get('LWBPCABUT', pd.Series(dtype='float64')),
+        'LWBPPASANG': lalu.get('LWBPPASANG', pd.Series(dtype='float64')),
+        'SAHLWBP': lalu.get('SAHLWBP', pd.Series(dtype='float64')),
+        'LWBPPAKAI': lalu.get('LWBPPAKAI', pd.Series(dtype='float64')),
+        'SLAWBP': lalu.get('SLAWBP', pd.Series(dtype='float64')),
+        'THBLMUT': lalu.get('THBLMUT', pd.Series(dtype='object')),
+        'WBPCABUT': lalu.get('WBPCABUT', pd.Series(dtype='float64')),
+        'WBPPASANG': lalu.get('WBPPASANG', pd.Series(dtype='float64')),
+        'SAHWBP': lalu.get('SAHWBP', pd.Series(dtype='float64')),
+        'WBPPAKAI': lalu.get('WBPPAKAI', pd.Series(dtype='float64')),
+        'SLAKVARH': lalu.get('SLAKVARH', pd.Series(dtype='float64')),
+        'KVARHCABUT': lalu.get('KVARHCABUT', pd.Series(dtype='float64')),
+        'KVARHPASANG': lalu.get('KVARHPASANG', pd.Series(dtype='float64')),
+        'SAHKVARH': lalu.get('SAHKVARH', pd.Series(dtype='float64')),
+        'KVARHPAKAI': lalu.get('KVARHPAKAI', pd.Series(dtype='float64')),
+        'KELBKVARH': lalu.get('KELBKVARH', pd.Series(dtype='float64')),
+        'KVAMAX_WBP': lalu.get('KVAMAX_WBP', pd.Series(dtype='float64')),
+        'DAYAMAX': lalu.get('DAYAMAX', pd.Series(dtype='float64')),
+        'DAYAMAX_WBP': lalu.get('DAYAMAX_WBP', pd.Series(dtype='float64')),
+        'TGLBACA': lalu.get('TGLBACA', pd.Series(dtype='object')),
+        'TGLUPLOAD': lalu.get('TGLUPLOAD', pd.Series(dtype='object')),
+        'TGLINISIALISASI': lalu.get('TGLINISIALISASI', pd.Series(dtype='object')),
+        'NAMAPNJ': lalu.get('NAMAPNJ', pd.Series(dtype='object')),
+        'KODERBM': lalu.get('KODERBM', pd.Series(dtype='object')),
         'DLPD': lalu.get('DLPD', pd.Series(dtype='float64')),
-        'LWBP_LALULALU': lalu.get('SLALWBP', pd.Series(dtype='float64')),
-        'LWBP_CABUT': lalu.get('SAHLWBP_CABUT', pd.Series(dtype='float64')),
-        'LWBP_PASANG': lalu.get('SLALWBP_PASANG', pd.Series(dtype='float64')),
-        'LWBP_AKHIR': lalu.get('SAHLWBP', pd.Series(dtype='float64')),
-        'WBP_LALULALU': lalu.get('SLAWBP', pd.Series(dtype='float64')),
-        'WBP_CABUT': lalu.get('SAHWBP_CABUT', pd.Series(dtype='float64')),
-        'WBP_PASANG': lalu.get('SLAWBP_PASANG', pd.Series(dtype='float64')),
-        'WBP_AKHIR': lalu.get('SAHWBP', pd.Series(dtype='float64')),
-        'JAM_NYALA': lalu.get('JAMNYALA', pd.Series(dtype='float64')),
-        'FAKM': lalu.get('FAKM', pd.Series(dtype='float64')),
-        'PEMKWH_REAL': (((lalu.get('SAHLWBP', 0) - lalu.get('SLALWBP_PASANG', 0))
-                        + (lalu.get('SAHLWBP_CABUT', 0) - lalu.get('SLALWBP', 0)))
-                        + ((lalu.get('SAHWBP', 0) - lalu.get('SLAWBP_PASANG', 0))
-                        + (lalu.get('SAHWBP_CABUT', 0) - lalu.get('SLAWBP', 0))))
+        'DLPD_LM': lalu.get('DLPD_LM', pd.Series(dtype='float64')),
+        'KDPEMBMETER': lalu.get('KDPEMBMETER', pd.Series(dtype='object')),
+        'PTGENTRIMETER': lalu.get('PTGENTRIMETER', pd.Series(dtype='object')),
+        'KODE_BACA': lalu.get('KODE_BACA', pd.Series(dtype='object')),
+        'KELAINAN_BC_METER': lalu.get('KELAINAN_BC_METER', pd.Series(dtype='object')),
+        'MSG': lalu.get('MSG', pd.Series(dtype='object')),
+        'DLPD_FKM': lalu.get('DLPD_FKM', pd.Series(dtype='float64')),
+        'DLPD_KVARH': lalu.get('DLPD_KVARH', pd.Series(dtype='float64')),
+        'DLPD_3BLN': lalu.get('DLPD_3BLN', pd.Series(dtype='float64')),
+        'DLPD_JNSMUTASI': lalu.get('DLPD_JNSMUTASI', pd.Series(dtype='object')),
+        'DLPD_TGLBACA': lalu.get('DLPD_TGLBACA', pd.Series(dtype='object')),
+        'ALASAN_ENTRI': lalu.get('ALASAN_ENTRI', pd.Series(dtype='object')),
+        'ALASAN_KOREKSI': lalu.get('ALASAN_KOREKSI', pd.Series(dtype='object')),
+        'SAHLWBP_IMPORT': lalu.get('SAHLWBP_IMPORT', pd.Series(dtype='float64')),
+        'SAHWBP_IMPORT': lalu.get('SAHWBP_IMPORT', pd.Series(dtype='float64')),
+        'SAHKVARH_IMPORT': lalu.get('SAHKVARH_IMPORT', pd.Series(dtype='float64'))
     })
 
     # Membuat DataFrame untuk periode akhir
     jurusakhir = pd.DataFrame({
+        'BLTH': akhir.get('BLTH', pd.Series(dtype='object')),
         'IDPEL': akhir.get('IDPEL', pd.Series(dtype='int64')),
+        'NOPEL': akhir.get('NOPEL', pd.Series(dtype='object')),
         'NAMA': akhir.get('NAMA', pd.Series(dtype='object')),
-        'PEMKWH': akhir.get('PEMKWH', pd.Series(dtype='float64')),
+        'UNITAP': akhir.get('UNITAP', pd.Series(dtype='object')),
+        'UNITUP': akhir.get('UNITUP', pd.Series(dtype='object')),
+        'KODEPOSTING': akhir.get('KODEPOSTING', pd.Series(dtype='int64')),
+        'KDKELOMPOK': akhir.get('KDKELOMPOK', pd.Series(dtype='object')),
+        'KDPROSES': akhir.get('KDPROSES', pd.Series(dtype='object')),
+        'KDDK': akhir.get('KDDK', pd.Series(dtype='object')),
         'TARIF': akhir.get('TARIF', pd.Series(dtype='object')),
         'DAYA': akhir.get('DAYA', pd.Series(dtype='float64')),
+        'TG': akhir.get('TG', pd.Series(dtype='object')),
+        'FKMKWH': akhir.get('FKMKWH', pd.Series(dtype='float64')),
+        'FKMKVARH': akhir.get('FKMKVARH', pd.Series(dtype='float64')),
+        'SLALWBP': akhir.get('SLALWBP', pd.Series(dtype='float64')),
+        'LWBPCABUT': akhir.get('LWBPCABUT', pd.Series(dtype='float64')),
+        'LWBPPASANG': akhir.get('LWBPPASANG', pd.Series(dtype='float64')),
+        'SAHLWBP': akhir.get('SAHLWBP', pd.Series(dtype='float64')),
+        'LWBPPAKAI': akhir.get('LWBPPAKAI', pd.Series(dtype='float64')),
+        'SLAWBP': akhir.get('SLAWBP', pd.Series(dtype='float64')),
+        'THBLMUT': akhir.get('THBLMUT', pd.Series(dtype='object')),
+        'WBPCABUT': akhir.get('WBPCABUT', pd.Series(dtype='float64')),
+        'WBPPASANG': akhir.get('WBPPASANG', pd.Series(dtype='float64')),
+        'SAHWBP': akhir.get('SAHWBP', pd.Series(dtype='float64')),
+        'WBPPAKAI': akhir.get('WBPPAKAI', pd.Series(dtype='float64')),
+        'SLAKVARH': akhir.get('SLAKVARH', pd.Series(dtype='float64')),
+        'KVARHCABUT': akhir.get('KVARHCABUT', pd.Series(dtype='float64')),
+        'KVARHPASANG': akhir.get('KVARHPASANG', pd.Series(dtype='float64')),
+        'SAHKVARH': akhir.get('SAHKVARH', pd.Series(dtype='float64')),
+        'KVARHPAKAI': akhir.get('KVARHPAKAI', pd.Series(dtype='float64')),
+        'KELBKVARH': akhir.get('KELBKVARH', pd.Series(dtype='float64')),
+        'KVAMAX_WBP': akhir.get('KVAMAX_WBP', pd.Series(dtype='float64')),
+        'DAYAMAX': akhir.get('DAYAMAX', pd.Series(dtype='float64')),
+        'DAYAMAX_WBP': akhir.get('DAYAMAX_WBP', pd.Series(dtype='float64')),
+        'TGLBACA': akhir.get('TGLBACA', pd.Series(dtype='object')),
+        'TGLUPLOAD': akhir.get('TGLUPLOAD', pd.Series(dtype='object')),
+        'TGLINISIALISASI': akhir.get('TGLINISIALISASI', pd.Series(dtype='object')),
+        'NAMAPNJ': akhir.get('NAMAPNJ', pd.Series(dtype='object')),
+        'KODERBM': akhir.get('KODERBM', pd.Series(dtype='object')),
         'DLPD': akhir.get('DLPD', pd.Series(dtype='float64')),
-        'LWBP_LALULALU': akhir.get('SLALWBP', pd.Series(dtype='float64')),
-        'LWBP_CABUT': akhir.get('SAHLWBP_CABUT', pd.Series(dtype='float64')),
-        'LWBP_PASANG': akhir.get('SLALWBP_PASANG', pd.Series(dtype='float64')),
-        'LWBP_AKHIR': akhir.get('SAHLWBP', pd.Series(dtype='float64')),
-        'WBP_LALULALU': akhir.get('SLAWBP', pd.Series(dtype='float64')),
-        'WBP_CABUT': akhir.get('SAHWBP_CABUT', pd.Series(dtype='float64')),
-        'WBP_PASANG': akhir.get('SLAWBP_PASANG', pd.Series(dtype='float64')),
-        'WBP_AKHIR': akhir.get('SAHWBP', pd.Series(dtype='float64')),
-        'JAM_NYALA': akhir.get('JAMNYALA', pd.Series(dtype='float64')),
-        'FAKM': akhir.get('FAKM', pd.Series(dtype='float64')),
-        'PEMKWH_REAL': (((akhir.get('SAHLWBP', 0) - akhir.get('SLALWBP_PASANG', 0))
-                        + (akhir.get('SAHLWBP_CABUT', 0) - akhir.get('SLALWBP', 0)))
-                        + ((akhir.get('SAHWBP', 0) - akhir.get('SLAWBP_PASANG', 0))
-                        + (akhir.get('SAHWBP_CABUT', 0) - akhir.get('SLAWBP', 0))))
+        'DLPD_LM': akhir.get('DLPD_LM', pd.Series(dtype='float64')),
+        'KDPEMBMETER': akhir.get('KDPEMBMETER', pd.Series(dtype='object')),
+        'PTGENTRIMETER': akhir.get('PTGENTRIMETER', pd.Series(dtype='object')),
+        'KODE_BACA': akhir.get('KODE_BACA', pd.Series(dtype='object')),
+        'KELAINAN_BC_METER': akhir.get('KELAINAN_BC_METER', pd.Series(dtype='object')),
+        'MSG': akhir.get('MSG', pd.Series(dtype='object')),
+        'DLPD_FKM': akhir.get('DLPD_FKM', pd.Series(dtype='float64')),
+        'DLPD_KVARH': akhir.get('DLPD_KVARH', pd.Series(dtype='float64')),
+        'DLPD_3BLN': akhir.get('DLPD_3BLN', pd.Series(dtype='float64')),
+        'DLPD_JNSMUTASI': akhir.get('DLPD_JNSMUTASI', pd.Series(dtype='object')),
+        'DLPD_TGLBACA': akhir.get('DLPD_TGLBACA', pd.Series(dtype='object')),
+        'ALASAN_ENTRI': akhir.get('ALASAN_ENTRI', pd.Series(dtype='object')),
+        'ALASAN_KOREKSI': akhir.get('ALASAN_KOREKSI', pd.Series(dtype='object')),
+        'SAHLWBP_IMPORT': akhir.get('SAHLWBP_IMPORT', pd.Series(dtype='float64')),
+        'SAHWBP_IMPORT': akhir.get('SAHWBP_IMPORT', pd.Series(dtype='float64')),
+        'SAHKVARH_IMPORT': akhir.get('SAHKVARH_IMPORT', pd.Series(dtype='float64'))
     })
 
     # Menggabungkan DataFrames
@@ -86,40 +199,41 @@ def copyDataframe(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini):
     path_foto1 = 'https://portalapp.iconpln.co.id/acmt/DisplayBlobServlet1?idpel='
     path_foto2 = '&blth='
 
-    # Membuat DataFrame akhir sesuai format yang diinginkan
+    # Membuat DataFrame akhir sesuai format yang diinginka
     kroscek = pd.DataFrame({
         'BLTH': blth_kini,
         'IDPEL': kroscek_temp['IDPEL'].astype(str),
         'NAMA': kroscek_temp['NAMA'],
         'TARIF': kroscek_temp['TARIF'],
         'DAYA': kroscek_temp['DAYA'],
-        'SLALWBP': kroscek_temp['LWBP_LALULALU_y'],
-        'LWBPCABUT': kroscek_temp['LWBP_CABUT_y'],
-        'SELISIH STAN BONGKAR': kroscek_temp['LWBP_AKHIR_y'] - kroscek_temp['LWBP_LALULALU_y'],
-        'LWBP PASANG': kroscek_temp['LWBP_PASANG_y'],
-        'SAHLWBP': kroscek_temp['LWBP_AKHIR_y'],
-        'KWH 10': kroscek_temp['PEMKWH_REAL_y'],
-        'KWH 09': kroscek_temp['PEMKWH_REAL_x'],
-        'KWH 08': kroscek_temp['PEMKWH_REAL_x'],
-        'DELTA PEMKWH': kroscek_temp['PEMKWH_REAL_y'] - kroscek_temp['PEMKWH_REAL_x'],
-        '%': np.where(kroscek_temp['PEMKWH_REAL_x'] == 0, '#DIV/0!', 
-                      (kroscek_temp['PEMKWH_REAL_y'] - kroscek_temp['PEMKWH_REAL_x']) 
-                      / kroscek_temp['PEMKWH_REAL_x'] * 100),
-        'KET': np.where(kroscek_temp['PEMKWH_REAL_y'] == 0, 'SESUAI', 'TIDAK SESUAI'),
+        'SLALWBP': kroscek_temp['SLALWBP_y'],
+        'LWBPCABUT': kroscek_temp['LWBPCABUT_y'],
+        'SELISIH STAN BONGKAR': kroscek_temp['LWBPCABUT_y'] - kroscek_temp['SLALWBP_y'],
+        'LWBP PASANG': kroscek_temp['LWBPPASANG_y'],
+        'SAHLWBP': kroscek_temp['SAHLWBP_y'],
+        'KWH 10': kroscek_temp['SAHLWBP_y'],  
+        'KWH 09': kroscek_temp['SAHLWBP_x'],  
+        'KWH 08': kroscek_temp['SAHLWBP_x'],
+        'DELTA PEMKWH': kroscek_temp['SAHLWBP_y'] - kroscek_temp['SAHLWBP_x'], 
+        '%': np.where(kroscek_temp['SAHLWBP_x'] == 0, '#DIV/0!', 
+              ((kroscek_temp['SAHLWBP_y'] - kroscek_temp['SAHLWBP_x']) 
+               / kroscek_temp['SAHLWBP_x'] * 100).map('{:.1f}%'.format)),
+        'KET': np.where(kroscek_temp['SAHLWBP_y'] == 0, 'SESUAI', 'TIDAK SESUAI'),
         'DLPD': kroscek_temp['DLPD_y'],
-        'STAN 09': kroscek_temp['LWBP_AKHIR_x'],
-        'STAN 08': kroscek_temp['LWBP_AKHIR_x'],
-        'STAN 07': kroscek_temp['LWBP_LALULALU_x'],
-        'LINK_FOTO_LALULALU': path_foto1 + kroscek_temp['IDPEL'].astype(str) + path_foto2 + blth_lalulalu,
-        'LINK_FOTO_LALU': path_foto1 + kroscek_temp['IDPEL'].astype(str) + path_foto2 + blth_lalu,
-        'LINK_FOTO_AKHIR': path_foto1 + kroscek_temp['IDPEL'].astype(str) + path_foto2 + blth_kini
+        'FOTO AKHIR': path_foto1 + kroscek_temp['IDPEL'].astype(str) + path_foto2 + blth_kini,
+        'FOTO LALU': path_foto1 + kroscek_temp['IDPEL'].astype(str) + path_foto2 + blth_lalu,
+        'FOTO LALU2': path_foto1 + kroscek_temp['IDPEL'].astype(str) + path_foto2 + blth_lalulalu,
+        'KET_KWH': np.where(kroscek_temp['SAHLWBP_y'] == 0, 'SESUAI', 'TIDAK SESUAI'),
+        'TINDAK LANJUT': '',  
+        'HASIL PEMERIKSAAN': '' 
     })
 
-    # Convert the 'FOTO_LALU' and 'FOTO_AKHIR' columns into clickable HTML links (e.g., for display in a notebook)
-    kroscek['LINK_FOTO_LALULALU'] = kroscek['LINK_FOTO_LALULALU'].apply(lambda x: f'<a href="{x}" target="_blank">View Image</a>')
-    kroscek['LINK_FOTO_LALU'] = kroscek['LINK_FOTO_LALU'].apply(lambda x: f'<a href="{x}" target="_blank">View Image</a>')
-    kroscek['LINK_FOTO_AKHIR'] = kroscek['LINK_FOTO_AKHIR'].apply(lambda x: f'<a href="{x}" target="_blank">View Image</a>')
-    
+    # Mengonversi kolom LINK_FOTO menjadi tautan HTML yang bisa diklik
+    kroscek['FOTO AKHIR'] = kroscek['FOTO AKHIR'].apply(lambda x: f'<a href="{x}" target="_blank">View Image</a>')
+    kroscek['FOTO LALU'] = kroscek['FOTO LALU'].apply(lambda x: f'<a href="{x}" target="_blank">View Image</a>')
+    kroscek['FOTO LALU2'] = kroscek['FOTO LALU2'].apply(lambda x: f'<a href="{x}" target="_blank">View Image</a>')
+
+    # Mengembalikan dataframe kroscek
     return kroscek
 
 # Function to filter and display images
@@ -243,7 +357,7 @@ if st.button("Proses"):
 # Tabs
 with col[1]:
     st.markdown('#### Main')
-    tabs = st.tabs(['SEMUA', 'KWH MAKS', 'NORMAL', 'NORMAL > 900', '0-40 JN', 'AMR'])
+    tabs = st.tabs(['SEMUA', 'T1-T6 DIATAS 40%', 'T1-T6 DIBAWAH 40%', 'T7 DIATAS 40%', 'T7 DIBAWAH 40%'])
 
     # Tab SEMUA
     with tabs[0]:
@@ -251,36 +365,27 @@ with col[1]:
         if 'lalulalu' in locals() and 'lalu' in locals() and 'akhir' in locals():
             st.dataframe(copyDataframe(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini))
 
-    # Tab KWH MAKS
+    # Tab T1-T6 DIATAS 40%
     with tabs[1]:
-        st.write("KWH Maks > 720 JN")
+        st.write("T1-T6 DIATAS 40%")
         if 'lalulalu' in locals() and 'lalu' in locals() and 'akhir' in locals():
             show_image_maks(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini)
 
-    # Tab NORMAL 450-900 VA
+    # Tab T1-T6 DIBAWAH 40%
     with tabs[2]:
-        st.write("Normal Daya 450-900 VA")
+        st.write("T1-T6 DIBAWAH 40%")
         if 'lalulalu' in locals() and 'lalu' in locals() and 'akhir' in locals():
             show_image_norm1(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini)
 
-    # Tab NORMAL > 900 VA
+    # Tab T7 DIATAS 40%
     with tabs[3]:
-        st.write("Normal Daya > 900")
+        st.write("T7 DIATAS 40%")
         if 'lalulalu' in locals() and 'lalu' in locals() and 'akhir' in locals():
             show_image_norm2(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini)
 
-    # Tab 0-40 JN
+    # Tab T7 DIBAWAH 40%
     with tabs[4]:
-        st.write("KWH Nol 40 JN")
+        st.write("T7 DIBAWAH 40%")
         if 'lalulalu' in locals() and 'lalu' in locals() and 'akhir' in locals():
             show_image_minnol(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini)
-    # Tab AMR
-    with tabs[5]:
-        st.write("Hasil AMR")
-        if 'lalulalu' in locals() and 'lalu' in locals() and 'akhir' in locals():
-            st.dataframe(amrFilter(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini))
-    # Tab SGR aaaaa
-    with tabs[6]:
-        st.write("Hasil sgR")
-        if 'lalulalu' in locals() and 'lalu' in locals() and 'akhir' in locals():
-            st.dataframe(amrFilter(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini))
+    #siippp
