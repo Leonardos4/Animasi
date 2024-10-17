@@ -194,6 +194,7 @@ def copyDataframe(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini):
     # Menggabungkan DataFrames
     kroscek_temp_1 = pd.merge(juruslalulalu, juruslalu, on='IDPEL', how='right')
     kroscek_temp = pd.merge(kroscek_temp_1, jurusakhir, on='IDPEL', how='right')
+    delta = kroscek_temp['LWBPPAKAI'] - kroscek_temp['LWBPPAKAI_y']
 
     # Definisi path untuk foto
     path_foto1 = 'https://portalapp.iconpln.co.id/acmt/DisplayBlobServlet1?idpel='
@@ -211,18 +212,17 @@ def copyDataframe(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini):
         'SELISIH STAN BONGKAR': kroscek_temp['LWBPCABUT'] - kroscek_temp['SLALWBP'],
         'LWBP PASANG': kroscek_temp['LWBPPASANG'],
         'SAHLWBP': kroscek_temp['SAHLWBP'],
-        'KWH 10': kroscek_temp['SAHLWBP'],
-        'KWH 09': kroscek_temp['SAHLWBP_y'],
-        'KWH 08': kroscek_temp['SAHLWBP_x'],
-        'DELTA PEMKWH': kroscek_temp['SAHLWBP'] - kroscek_temp['SAHLWBP_y'],
+        'KWH 10': kroscek_temp['LWBPPAKAI'],
+        'KWH 09': kroscek_temp['LWBPPAKAI_y'],
+        'KWH 08': kroscek_temp['LWBPPAKAI_x'],
+        'DELTA PEMKWH': delta,
     })
 
     # Perhitungan persentase sebagai numerik
-    percentage = ((kroscek_temp['SAHLWBP'] - kroscek_temp['SAHLWBP_y']) 
-                / kroscek_temp['SAHLWBP_y']) * 100
+    percentage = (delta) / kroscek_temp['LWBPPAKAI_y'] * 100
 
     # Isi kolom % dengan nilai numerik, set 0 jika SAHLWBP_y adalah 0
-    kroscek['%'] = np.where(kroscek_temp['SAHLWBP_y'] != 0, percentage, 0)
+    kroscek['%'] = np.where(kroscek_temp['LWBPPAKAI'] != 0, percentage, 0)
 
     # Sortir dataframe berdasarkan kolom % dari terbesar ke terkecil
     kroscek = kroscek.sort_values(by='%', ascending=False)
@@ -341,13 +341,13 @@ with col[0]:
     st.header('Billing Management Application')
 
     # Input Bulan
-    set_bulan = st.columns((0.75, 0.75, 0.75), gap='medium')
-    with set_bulan[0]:
-        blth_lalulalu = st.text_input('Masukkan periode bulan lalu2 (YYYYMM)')
-    with set_bulan[1]:
-        blth_lalu = st.text_input('Masukkan periode bulan lalu (YYYYMM)')
-    with set_bulan[2]:
-        blth_kini = st.text_input('Masukkan periode bulan kini (YYYYMM)')
+set_bulan = st.columns((0.75, 0.75, 0.75), gap='medium')
+with set_bulan[0]:
+    blth_lalulalu = st.text_input('Masukkan periode bulan lalu2 (YYYYMM)')
+with set_bulan[1]:
+    blth_lalu = st.text_input('Masukkan periode bulan lalu (YYYYMM)')
+with set_bulan[2]:
+    blth_kini = st.text_input('Masukkan periode bulan kini (YYYYMM)')
 
     # File Uploader
     file_lalulalu = st.file_uploader("Upload Data 2 Periode Sebelumnya")
