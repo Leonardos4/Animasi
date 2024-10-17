@@ -275,3 +275,5 @@ with col[1]:
         st.write("DIBAWAH 40%")
         if 'lalulalu' in locals() and 'lalu' in locals() and 'akhir' in locals():
             show_image_norm1(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini)
+
+#ASASAA
