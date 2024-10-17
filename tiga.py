@@ -227,13 +227,13 @@ with col[0]:
     st.header('Billing Management Application')
 
     # Input Bulan
-    set_bulan = st.columns((0.75, 0.75, 0.75), gap='medium')
-    with set_bulan[0]:
-        blth_lalulalu = st.text_input('Masukkan periode bulan lalu2 (YYYYMM)')
-    with set_bulan[1]:
-        blth_lalu = st.text_input('Masukkan periode bulan lalu (YYYYMM)')
-    with set_bulan[2]:
-        blth_kini = st.text_input('Masukkan periode bulan kini (YYYYMM)')
+set_bulan = st.columns((0.75, 0.75, 0.75), gap='medium')
+with set_bulan[0]:
+    blth_lalulalu = st.text_input('Masukkan periode bulan lalu2 (YYYYMM)')
+with set_bulan[1]:
+    blth_lalu = st.text_input('Masukkan periode bulan lalu (YYYYMM)')
+with set_bulan[2]:
+    blth_kini = st.text_input('Masukkan periode bulan kini (YYYYMM)')
 
     # File Uploader
     file_lalulalu = st.file_uploader("Upload Data 2 Periode Sebelumnya")
