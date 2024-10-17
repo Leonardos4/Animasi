@@ -206,35 +206,48 @@ def copyDataframe(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini):
         'NAMA': kroscek_temp['NAMA'],
         'TARIF': kroscek_temp['TARIF'],
         'DAYA': kroscek_temp['DAYA'],
-        'SLALWBP': kroscek_temp['SLALWBP_y'],
-        'LWBPCABUT': kroscek_temp['LWBPCABUT_y'],
-        'SELISIH STAN BONGKAR': kroscek_temp['LWBPCABUT_y'] - kroscek_temp['SLALWBP_y'],
-        'LWBP PASANG': kroscek_temp['LWBPPASANG_y'],
-        'SAHLWBP': kroscek_temp['SAHLWBP_y'],
-        'KWH 10': kroscek_temp['SAHLWBP_y'],  
-        'KWH 09': kroscek_temp['SAHLWBP_x'],  
+        'SLALWBP': kroscek_temp['SLALWBP'],
+        'LWBPCABUT': kroscek_temp['LWBPCABUT'],
+        'SELISIH STAN BONGKAR': kroscek_temp['LWBPCABUT'] - kroscek_temp['SLALWBP'],
+        'LWBP PASANG': kroscek_temp['LWBPPASANG'],
+        'SAHLWBP': kroscek_temp['SAHLWBP'],
+        'KWH 10': kroscek_temp['SAHLWBP'],
+        'KWH 09': kroscek_temp['SAHLWBP_y'],
         'KWH 08': kroscek_temp['SAHLWBP_x'],
-        'DELTA PEMKWH': kroscek_temp['SAHLWBP_y'] - kroscek_temp['SAHLWBP_x'], 
-        '%': np.where(kroscek_temp['SAHLWBP_x'] == 0, '#DIV/0!', 
-              ((kroscek_temp['SAHLWBP_y'] - kroscek_temp['SAHLWBP_x']) 
-               / kroscek_temp['SAHLWBP_x'] * 100).map('{:.1f}%'.format)),
-        'KET': np.where(kroscek_temp['SAHLWBP_y'] == 0, 'SESUAI', 'TIDAK SESUAI'),
-        'DLPD': kroscek_temp['DLPD_y'],
-        'FOTO AKHIR': path_foto1 + kroscek_temp['IDPEL'].astype(str) + path_foto2 + blth_kini,
-        'FOTO LALU': path_foto1 + kroscek_temp['IDPEL'].astype(str) + path_foto2 + blth_lalu,
-        'FOTO LALU2': path_foto1 + kroscek_temp['IDPEL'].astype(str) + path_foto2 + blth_lalulalu,
-        'KET_KWH': np.where(kroscek_temp['SAHLWBP_y'] == 0, 'SESUAI', 'TIDAK SESUAI'),
-        'TINDAK LANJUT': '',  
-        'HASIL PEMERIKSAAN': '' 
+        'DELTA PEMKWH': kroscek_temp['SAHLWBP'] - kroscek_temp['SAHLWBP_y'],
     })
 
-    # Mengonversi kolom LINK_FOTO menjadi tautan HTML yang bisa diklik
+    # Perhitungan persentase sebagai numerik
+    percentage = ((kroscek_temp['SAHLWBP'] - kroscek_temp['SAHLWBP_y']) 
+                / kroscek_temp['SAHLWBP_y']) * 100
+
+    # Isi kolom % dengan nilai numerik, set 0 jika SAHLWBP_y adalah 0
+    kroscek['%'] = np.where(kroscek_temp['SAHLWBP_y'] != 0, percentage, 0)
+
+    # Sortir dataframe berdasarkan kolom % dari terbesar ke terkecil
+    kroscek = kroscek.sort_values(by='%', ascending=False)
+
+    # Tambahkan simbol % setelah pengurutan
+    kroscek['%'] = kroscek['%'].astype(int).map('{}%'.format)
+
+    # Melanjutkan pembuatan kolom lainnya
+    kroscek['KET'] = np.where(kroscek_temp['SAHLWBP'] == 0, 'SESUAI', 'TIDAK SESUAI')
+    kroscek['DLPD'] = kroscek_temp['DLPD']
+    kroscek['FOTO AKHIR'] = path_foto1 + kroscek_temp['IDPEL'].astype(str) + path_foto2 + blth_kini
+    kroscek['FOTO LALU'] = path_foto1 + kroscek_temp['IDPEL'].astype(str) + path_foto2 + blth_lalu
+    kroscek['FOTO LALU2'] = path_foto1 + kroscek_temp['IDPEL'].astype(str) + path_foto2 + blth_lalulalu
+    kroscek['KET_KWH'] = np.where(kroscek_temp['SAHLWBP_y'] == 0, 'SESUAI', 'TIDAK SESUAI')
+    kroscek['TINDAK LANJUT'] = ''
+    kroscek['HASIL PEMERIKSAAN'] = ''
+
+    # Menambahkan tautan HTML ke kolom gambar
     kroscek['FOTO AKHIR'] = kroscek['FOTO AKHIR'].apply(lambda x: f'<a href="{x}" target="_blank">View Image</a>')
     kroscek['FOTO LALU'] = kroscek['FOTO LALU'].apply(lambda x: f'<a href="{x}" target="_blank">View Image</a>')
     kroscek['FOTO LALU2'] = kroscek['FOTO LALU2'].apply(lambda x: f'<a href="{x}" target="_blank">View Image</a>')
 
     # Mengembalikan dataframe kroscek
     return kroscek
+
 
 # Function to filter and display images
 def amrFilter(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini):
@@ -357,7 +370,7 @@ if st.button("Proses"):
 # Tabs
 with col[1]:
     st.markdown('#### Main')
-    tabs = st.tabs(['SEMUA', 'T1-T6 DIATAS 40%', 'T1-T6 DIBAWAH 40%', 'T7 DIATAS 40%', 'T7 DIBAWAH 40%'])
+    tabs = st.tabs(['SEMUA', 'DIATAS 40%', 'DIBAWAH 40%'])
 
     # Tab SEMUA
     with tabs[0]:
@@ -365,27 +378,14 @@ with col[1]:
         if 'lalulalu' in locals() and 'lalu' in locals() and 'akhir' in locals():
             st.dataframe(copyDataframe(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini))
 
-    # Tab T1-T6 DIATAS 40%
+    # Tab DIATAS 40%
     with tabs[1]:
-        st.write("T1-T6 DIATAS 40%")
+        st.write("DIATAS 40%")
         if 'lalulalu' in locals() and 'lalu' in locals() and 'akhir' in locals():
             show_image_maks(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini)
 
-    # Tab T1-T6 DIBAWAH 40%
+    # Tab DIBAWAH 40%
     with tabs[2]:
-        st.write("T1-T6 DIBAWAH 40%")
+        st.write("DIBAWAH 40%")
         if 'lalulalu' in locals() and 'lalu' in locals() and 'akhir' in locals():
             show_image_norm1(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini)
-
-    # Tab T7 DIATAS 40%
-    with tabs[3]:
-        st.write("T7 DIATAS 40%")
-        if 'lalulalu' in locals() and 'lalu' in locals() and 'akhir' in locals():
-            show_image_norm2(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini)
-
-    # Tab T7 DIBAWAH 40%
-    with tabs[4]:
-        st.write("T7 DIBAWAH 40%")
-        if 'lalulalu' in locals() and 'lalu' in locals() and 'akhir' in locals():
-            show_image_minnol(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini)
-    #siippp
