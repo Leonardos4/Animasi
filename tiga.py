@@ -12,53 +12,20 @@ def copyDataframe(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini):
     juruslalulalu = pd.DataFrame({
         'BLTH': lalulalu.get('BLTH', pd.Series(dtype='object')),
         'IDPEL': lalulalu.get('IDPEL', pd.Series(dtype='int64')),
-        'NOPEL': lalulalu.get('NOPEL', pd.Series(dtype='object')),
-        'NAMA': lalulalu.get('NAMA', pd.Series(dtype='object')),
-        'TARIF': lalulalu.get('TARIF', pd.Series(dtype='object')),
-        'DAYA': lalulalu.get('DAYA', pd.Series(dtype='float64')),
-        'SLALWBP': lalulalu.get('SLALWBP', pd.Series(dtype='float64')),
-        'LWBPCABUT': lalulalu.get('LWBPCABUT', pd.Series(dtype='float64')),
-        'LWBPPASANG': lalulalu.get('LWBPPASANG', pd.Series(dtype='float64')),
-        'SAHLWBP': lalulalu.get('SAHLWBP', pd.Series(dtype='float64')),
-        'LWBPPAKAI': lalulalu.get('LWBPPAKAI', pd.Series(dtype='float64')),
-        'SLAWBP': lalulalu.get('SLAWBP', pd.Series(dtype='float64')),
-        'WBPCABUT': lalulalu.get('WBPCABUT', pd.Series(dtype='float64')),
-        'WBPPASANG': lalulalu.get('WBPPASANG', pd.Series(dtype='float64')),
-        'SAHWBP': lalulalu.get('SAHWBP', pd.Series(dtype='float64')),
-        'WBPPAKAI': lalulalu.get('WBPPAKAI', pd.Series(dtype='float64')),
-        'DLPD': lalulalu.get('DLPD', pd.Series(dtype='float64')),
-        'DLPD_LM': lalulalu.get('DLPD_LM', pd.Series(dtype='float64'))
-        
+        'LWBPPAKAI': lalulalu.get('LWBPPAKAI', pd.Series(dtype='float64')) 
     })
 
     # Membuat DataFrame untuk periode lalu
     juruslalu = pd.DataFrame({
         'BLTH': lalu.get('BLTH', pd.Series(dtype='object')),
         'IDPEL': lalu.get('IDPEL', pd.Series(dtype='int64')),
-        'NOPEL': lalu.get('NOPEL', pd.Series(dtype='object')),
-        'NAMA': lalu.get('NAMA', pd.Series(dtype='object')),
-        'TARIF': lalu.get('TARIF', pd.Series(dtype='object')),
-        'DAYA': lalu.get('DAYA', pd.Series(dtype='float64')),
-        'SLALWBP': lalu.get('SLALWBP', pd.Series(dtype='float64')),
-        'LWBPCABUT': lalu.get('LWBPCABUT', pd.Series(dtype='float64')),
-        'LWBPPASANG': lalu.get('LWBPPASANG', pd.Series(dtype='float64')),
-        'SAHLWBP': lalu.get('SAHLWBP', pd.Series(dtype='float64')),
-        'LWBPPAKAI': lalu.get('LWBPPAKAI', pd.Series(dtype='float64')),
-        'SLAWBP': lalu.get('SLAWBP', pd.Series(dtype='float64')),
-        'WBPCABUT': lalu.get('WBPCABUT', pd.Series(dtype='float64')),
-        'WBPPASANG': lalu.get('WBPPASANG', pd.Series(dtype='float64')),
-        'SAHWBP': lalu.get('SAHWBP', pd.Series(dtype='float64')),
-        'WBPPAKAI': lalu.get('WBPPAKAI', pd.Series(dtype='float64')),
-        'DLPD': lalu.get('DLPD', pd.Series(dtype='float64')),
-        'DLPD_LM': lalu.get('DLPD_LM', pd.Series(dtype='float64'))
-
+        'LWBPPAKAI': lalu.get('LWBPPAKAI', pd.Series(dtype='float64'))
     })
 
     # Membuat DataFrame untuk periode akhir
     jurusakhir = pd.DataFrame({
         'BLTH': akhir.get('BLTH', pd.Series(dtype='object')),
         'IDPEL': akhir.get('IDPEL', pd.Series(dtype='int64')),
-        'NOPEL': akhir.get('NOPEL', pd.Series(dtype='object')),
         'NAMA': akhir.get('NAMA', pd.Series(dtype='object')),
         'TARIF': akhir.get('TARIF', pd.Series(dtype='object')),
         'DAYA': akhir.get('DAYA', pd.Series(dtype='float64')),
@@ -67,14 +34,7 @@ def copyDataframe(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini):
         'LWBPPASANG': akhir.get('LWBPPASANG', pd.Series(dtype='float64')),
         'SAHLWBP': akhir.get('SAHLWBP', pd.Series(dtype='float64')),
         'LWBPPAKAI': akhir.get('LWBPPAKAI', pd.Series(dtype='float64')),
-        'SLAWBP': akhir.get('SLAWBP', pd.Series(dtype='float64')),
-        'WBPCABUT': akhir.get('WBPCABUT', pd.Series(dtype='float64')),
-        'WBPPASANG': akhir.get('WBPPASANG', pd.Series(dtype='float64')),
-        'SAHWBP': akhir.get('SAHWBP', pd.Series(dtype='float64')),
-        'WBPPAKAI': akhir.get('WBPPAKAI', pd.Series(dtype='float64')),
-        'DLPD': akhir.get('DLPD', pd.Series(dtype='float64')),
-        'DLPD_LM': akhir.get('DLPD_LM', pd.Series(dtype='float64'))
-       
+        'DLPD': akhir.get('DLPD', pd.Series(dtype='float64'))
     })
 
     # Menggabungkan DataFrames
@@ -95,7 +55,7 @@ def copyDataframe(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini):
         'DAYA': kroscek_temp['DAYA'],
         'SLALWBP': kroscek_temp['SLALWBP'],
         'LWBPCABUT': kroscek_temp['LWBPCABUT'],
-        'SELISIH STAN BONGKAR': kroscek_temp['LWBPCABUT'] - kroscek_temp['SLALWBP'],
+        'SELISIH STAN BONGKAR': kroscek_temp['SLALWBP'] - kroscek_temp['LWBPCABUT'],
         'LWBP PASANG': kroscek_temp['LWBPPASANG'],
         'SAHLWBP': kroscek_temp['SAHLWBP'],
         'KWH 10': kroscek_temp['LWBPPAKAI'],
@@ -111,7 +71,8 @@ def copyDataframe(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini):
     kroscek['%'] = np.where(kroscek_temp['LWBPPAKAI'] != 0, percentage, 0)
 
     # Sortir dataframe berdasarkan kolom % dari terbesar ke terkecil
-    kroscek = kroscek.sort_values(by='%', ascending=False)
+    
+    #kroscek = kroscek.sort_values(by='%', ascending=False)
 
     # Tambahkan simbol % setelah pengurutan
     kroscek['%'] = kroscek['%'].astype(int).map('{}%'.format)
@@ -122,7 +83,7 @@ def copyDataframe(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini):
     kroscek['FOTO AKHIR'] = path_foto1 + kroscek_temp['IDPEL'].astype(str) + path_foto2 + blth_kini
     kroscek['FOTO LALU'] = path_foto1 + kroscek_temp['IDPEL'].astype(str) + path_foto2 + blth_lalu
     kroscek['FOTO LALU2'] = path_foto1 + kroscek_temp['IDPEL'].astype(str) + path_foto2 + blth_lalulalu
-    kroscek['KET_KWH'] = np.where(kroscek_temp['SAHLWBP_y'] == 0, 'SESUAI', 'TIDAK SESUAI')
+    #kroscek['KET_KWH'] = np.where(kroscek_temp['SAHLWBP_y'] == 0, 'SESUAI', 'TIDAK SESUAI')
     kroscek['TINDAK LANJUT'] = ''
     kroscek['HASIL PEMERIKSAAN'] = ''
 
